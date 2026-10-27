@@ -1,816 +1,928 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DukaanAI — Smart Business Growth</title>
-
+<title>DukaanAI — Business tools for Bharat</title>
 <style>
 :root {
-    --bg: #07111f;
-    --panel: #101e32;
-    --blue: #4385ff;
-    --cyan: #48d9ff;
-    --white: #f4f7ff;
-    --muted: #9aabc4;
-    --border: rgba(151, 180, 225, .16);
+  --black: #000000;
+  --surface: #1d1d1f;
+  --surface-2: #161617;
+  --text: #f5f5f7;
+  --text-secondary: #86868b;
+  --text-tertiary: #6e6e73;
+  --accent: #d4af37;
+  --accent-light: #f5d76e;
+  --border: rgba(255,255,255,0.08);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: var(--white);
-    background:
-        radial-gradient(ellipse at 80% 5%, #163d7250, transparent 38%),
-        radial-gradient(ellipse at 0% 35%, #123d5b35, transparent 35%),
-        var(--bg);
-}
-a { color: inherit; text-decoration: none; }
-button, input, textarea, select { font: inherit; }
-button { cursor: pointer; }
-header {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    background: #07111fe8;
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid var(--border);
-}
-.nav {
-    max-width: 1160px;
-    margin: auto;
-    padding: 19px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-.logo {
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: -.8px;
-}
-.logo span { color: var(--cyan); }
-.nav-links { display: flex; gap: 25px; color: #c1cde0; font-size: 14px; }
-.nav-links a:hover { color: var(--cyan); }
-
-.hero {
-    max-width: 1160px;
-    margin: auto;
-    padding: 86px 22px 70px;
-    display: grid;
-    grid-template-columns: 1.15fr .85fr;
-    align-items: center;
-    gap: 55px;
-}
-.eyebrow {
-    display: inline-block;
-    padding: 9px 13px;
-    border: 1px solid #4385ff55;
-    border-radius: 30px;
-    color: #91c4ff;
-    background: #4385ff12;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-h1 {
-    margin: 24px 0 18px;
-    font-size: clamp(38px, 5vw, 64px);
-    line-height: 1.08;
-    letter-spacing: -2px;
-}
-.gradient-text {
-    color: var(--cyan);
-    background: linear-gradient(90deg, #68a5ff, #54e4ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.hero p {
-    max-width: 540px;
-    color: var(--muted);
-    line-height: 1.8;
-    font-size: 16px;
-}
-.primary-btn {
-    display: inline-block;
-    border: 0;
-    color: white;
-    background: linear-gradient(110deg, #2867ed, #398fff);
-    padding: 14px 20px;
-    border-radius: 11px;
-    font-weight: 700;
-    box-shadow: 0 8px 30px #246aff35;
-    transition: transform .2s, box-shadow .2s;
-}
-.primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 35px #246aff55;
-}
-.hero .primary-btn { margin-top: 12px; }
-
-.preview {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transform-style: preserve-3d;
-  background: linear-gradient(
-    135deg,
-    rgba(18, 36, 62, 0.88),
-    rgba(7, 17, 31, 0.94)
-  );
-  border: 1px solid rgba(100, 180, 255, 0.24);
-  border-radius: 22px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.38),
-    0 0 35px rgba(67, 133, 255, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.09);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-}
-.preview::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: linear-gradient(135deg, #4c9bff40, transparent 45%, #4be3ff20);
-    pointer-events: none;
-}
-.preview-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 23px;
-}
-.status {
-    color: #7af0c2;
-    font-size: 12px;
-}
-.preview h3 { margin: 0; font-size: 20px; }
-.preview-box {
-    padding: 17px;
-    margin-top: 12px;
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    background: #091729;
-}
-.preview-box small { color: var(--muted); }
-.preview-box strong { display: block; margin-top: 8px; line-height: 1.5; }
-.preview-icon {
-    display: inline-grid;
-    place-items: center;
-    width: 37px;
-    height: 37px;
-    border-radius: 11px;
-    background: #347cff24;
-    font-size: 19px;
-    margin-right: 8px;
-}
-.stats {
-    max-width: 1160px;
-    margin: 0 auto 25px;
-    padding: 0 22px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-}
-.stat {
-    padding: 18px;
-    border: 1px solid var(--border);
-    background: #10203988;
-    border-radius: 15px;
-    text-align: center;
-}
-.stat strong { display: block; font-size: 19px; }
-.stat span { display: block; color: var(--muted); font-size: 12px; margin-top: 7px; }
-
-.section {
-    max-width: 1160px;
-    margin: auto;
-    padding: 65px 22px;
-}
-.section-heading { text-align: center; margin-bottom: 36px; }
-.section-heading h2 { font-size: clamp(27px, 4vw, 38px); margin: 0 0 13px; }
-.section-heading p { color: var(--muted); line-height: 1.7; margin: auto; max-width: 600px; }
-.tool-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-}
-.tool-card {
-    min-width: 0;
-    padding: 25px;
-    border-radius: 19px;
-    border: 1px solid var(--border);
-    background: linear-gradient(145deg, #14243aee, #0c1929ee);
-    transition: transform .2s, border-color .2s;
-}
-.tool-card:hover { transform: translateY(-4px); border-color: #4b9bff75; }
-.tool-title { display: flex; gap: 13px; align-items: center; margin-bottom: 10px; }
-.tool-icon {
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-    background: #347cff22;
-    border: 1px solid #4b9bff30;
-    border-radius: 14px;
-}
-.tool-title h3 { margin: 0; font-size: 18px; }
-.tool-card > p { color: var(--muted); font-size: 13px; line-height: 1.6; min-height: 40px; }
-label { display: block; margin: 17px 0 8px; font-size: 13px; color: #d8e4f8; }
-input, textarea, select {
-    width: 100%;
-    min-width: 0;
-    padding: 13px 14px;
-    color: var(--white);
-    background: #081526;
-    border: 1px solid #31445e;
-    border-radius: 10px;
-    outline: none;
-}
-input:focus, textarea:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px #4385ff18; }
-textarea { resize: vertical; min-height: 85px; line-height: 1.5; }
-input::placeholder, textarea::placeholder { color: #71839c; }
-select option { background: #101e32; }
-.tool-card .primary-btn { width: 100%; margin-top: 16px; }
-.result {
-    display: none;
-    margin-top: 18px;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #4385ff40;
-    background: #081526;
-}
-.result.show { display: block; }
-.result-label { color: var(--cyan); font-size: 12px; margin-bottom: 10px; font-weight: bold; }
-.result-text { white-space: pre-wrap; overflow-wrap: anywhere; color: #e6edfa; font-size: 14px; line-height: 1.7; }
-.copy-btn {
-    margin-top: 13px;
-    padding: 10px 13px;
-    border: 1px solid #4385ff70;
-    border-radius: 9px;
-    background: #4385ff17;
-    color: #b8d5ff;
-}
-.about-box {
-    padding: 34px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: linear-gradient(120deg, #12243c, #0c1829);
-    text-align: center;
-}
-.about-box p { color: var(--muted); line-height: 1.8; max-width: 700px; margin: 12px auto 0; }
-footer {
-    border-top: 1px solid var(--border);
-    padding: 28px 22px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-}
-footer strong { color: var(--white); }
-
-@media (max-width: 760px) {
-    .hero { grid-template-columns: 1fr; padding-top: 55px; gap: 35px; }
-    .preview { max-width: 550px; width: 100%; }
-    .tool-grid { grid-template-columns: 1fr; }
-    .nav { padding: 16px; }
-    .nav-links { gap: 13px; font-size: 12px; }
-    .logo { font-size: 22px; }
-    .section { padding: 48px 16px; }
-    .stats { padding: 0 16px; gap: 8px; }
-    .stat { padding: 13px 6px; }
-    .stat strong { font-size: 16px; }
-    .stat span { font-size: 10px; }
-}
-@media (max-width: 380px) {
-    .nav { align-items: flex-start; flex-direction: column; }
-    h1 { letter-spacing: -1px; }
-    .tool-card { padding: 18px; }
-}
-/* 3D Dashboard Effect */
-.preview {
-  transform-style: preserve-3d;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 20px 60px rgba(67, 133, 255, 0.2);
-}
-
-.preview:hover {
-  transform: perspective(1000px) rotateY(-4deg) rotateX(3deg) translateY(-5px);
-  box-shadow: 0 25px 70px rgba(67, 133, 255, 0.35);
-}
-
-/* DukaanAI Glowing Sphere */
-.ai-sphere-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 10px;
-  perspective: 800px;
-}
-
-.ai-sphere {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  position: relative;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle at 30% 25%, #b9f5ff 0%, #48d9ff 12%, #4385ff 38%, #111c56 68%, #07111f 78%);
-  box-shadow:
-    0 0 20px rgba(72, 217, 255, 0.7),
-    0 0 55px rgba(67, 133, 255, 0.45),
-    inset -12px -12px 25px rgba(0, 0, 30, 0.7);
-  animation: sphereFloat 4s ease-in-out infinite;
-}
-
-.ai-sphere::before {
-  content: "";
-  position: absolute;
-  inset: -9px;
-  border: 1px solid rgba(72, 217, 255, 0.65);
-  border-radius: 50%;
-  transform: rotateX(65deg);
-  box-shadow: 0 0 15px rgba(72, 217, 255, 0.3);
-}
-
-.ai-sphere::after {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 50%;
-}
-
-.ai-sphere-core {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #e6fcff;
-  box-shadow: 0 0 20px #48d9ff, 0 0 45px #4385ff;
-}
-
-.ai-sphere-label {
-  margin: 18px 0 0;
-  color: #eaf5ff;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  text-align: center;
-}
-
-.ai-sphere-label span {
-  display: block;
-  margin-top: 5px;
-  color: #48d9ff;
-  font-size: 9px;
-  letter-spacing: 4px;
-}
-
-@keyframes sphereFloat {
-  0%, 100% { transform: translateY(0) rotateY(0deg); }
-  50% { transform: translateY(-8px) rotateY(12deg); }
-}
-
-/* 3D Preview Cards */
-.preview-box {
-  position: relative;
-  transform: translateZ(0);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.preview-box:hover {
-  transform: translateY(-5px) translateZ(12px);
-  border-color: rgba(72, 217, 255, 0.7);
-  box-shadow: 0 12px 28px rgba(67, 133, 255, 0.18);
-}
-
-/* Premium 3D Tool Cards */
-.tool-card {
-  transform-style: preserve-3d;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.tool-card:hover {
-  transform: perspective(1000px) translateY(-7px) rotateX(2deg);
-  border-color: rgba(72, 217, 255, 0.65);
-  box-shadow: 0 18px 40px rgba(67, 133, 255, 0.18);
-}
-
-/* DukaanAI Animated 3D Background */
-body {
-  position: relative;
-  isolation: isolate;
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--text);
+  line-height: 1.47059;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(67, 133, 255, 0.20) 0 2px, transparent 4px),
-    radial-gradient(circle at 70% 60%, rgba(72, 217, 255, 0.18) 0 2px, transparent 5px),
-    radial-gradient(circle at 45% 80%, rgba(67, 133, 255, 0.15) 0 3px, transparent 6px),
-    radial-gradient(ellipse at center, rgba(17, 60, 120, 0.22), transparent 65%);
-  background-size: 180px 180px, 240px 240px, 200px 200px, 100% 100%;
-  animation: aiBackgroundDrift 10s linear infinite;
-  transform: translateZ(0);
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; border: none; }
+input, textarea, select { font-family: inherit; font-size: 17px; }
+
+/* NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 48px;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+.nav-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.nav-logo svg { width: 24px; height: 24px; }
+.nav-logo .ai { color: var(--accent); }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(245,245,247,0.8);
+}
+.nav-links a { transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-toggle { display: none; background: none; padding: 8px; color: var(--text); }
+.nav-toggle svg { width: 20px; height: 20px; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-links.open {
+    display: flex;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 20px 22px;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+    gap: 20px;
+  }
 }
 
-@keyframes aiBackgroundDrift {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate3d(2%, -1%, 0) rotate(4deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
+/* HERO */
+.hero {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 100px 22px 120px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+}
+.hero-eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: block;
+}
+.hero h1 {
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+.hero h1 .gold { color: var(--accent); }
+.hero p {
+  font-size: 21px;
+  line-height: 1.381;
+  font-weight: 400;
+  letter-spacing: 0.011em;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  body::before {
-    animation: none;
-  }
+/* APPLE PILL BUTTON */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 980px;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  transition: all 0.25s var(--ease);
+  white-space: nowrap;
+}
+.btn-primary {
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+.btn-primary:hover {
+  background: #ffffff;
+  transform: scale(1.02);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  padding: 12px 8px;
+}
+.btn-secondary:hover {
+  text-decoration: underline;
+}
+.btn-secondary::after {
+  content: "›";
+  margin-left: 6px;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+.btn-secondary:hover::after {
+  transform: translateX(3px);
 }
 
-/* Cinematic DukaanAI Background */
-body {
-  background-color: #050b18;
-  background-image:
-    radial-gradient(ellipse at 15% 25%, rgba(0, 110, 255, 0.22), transparent 42%),
-    radial-gradient(ellipse at 85% 65%, rgba(0, 220, 255, 0.13), transparent 38%),
-    radial-gradient(ellipse at 50% 100%, rgba(70, 40, 220, 0.16), transparent 45%);
-  background-attachment: fixed;
+/* EARTH */
+.earth-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
 }
-
-body::after {
-  content: "";
-  position: fixed;
+.earth-wrap {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  animation: earthFloat 8s ease-in-out infinite;
+}
+@keyframes earthFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.earth {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0a1e3a;
+  box-shadow:
+    inset -40px -30px 80px rgba(0,0,20,0.75),
+    inset 20px 15px 60px rgba(160,220,255,0.15),
+    0 0 100px rgba(72,150,255,0.35),
+    0 60px 100px -20px rgba(0,0,0,0.8);
+}
+.earth-texture {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 400%;
+  background-image: url('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg');
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+  background-color: #0a1e3a;
+  animation: earthRotate 32s linear infinite;
+}
+@keyframes earthRotate {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.earth-clouds {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 400%;
+  background-image: url('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png');
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+  animation: earthRotate 55s linear infinite;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+.earth-shade {
+  position: absolute;
   inset: 0;
-  pointer-events: none;
-  z-index: -1;
+  border-radius: 50%;
   background:
-    linear-gradient(
-      115deg,
-      transparent 25%,
-      rgba(65, 140, 255, 0.07) 45%,
-      rgba(70, 220, 255, 0.12) 50%,
-      transparent 70%
-    );
-  background-size: 250% 100%;
-  animation: cinematicLight 8s ease-in-out infinite alternate;
+    radial-gradient(circle at 30% 28%, rgba(255,255,255,0.28) 0%, transparent 35%),
+    radial-gradient(circle at 75% 75%, transparent 35%, rgba(0,0,20,0.55) 75%, rgba(0,0,15,0.9) 100%);
+  pointer-events: none;
 }
-
-@keyframes cinematicLight {
-  from { background-position: 100% 0; }
-  to   { background-position: 0% 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::after { animation: none; }
-}
-
-  }
-}
-
-  body::after {
-    width: 260px;
-    height: 260px;
-    margin-left: -130px;
-  }
-}
-
-/* Floating 3D Light Particles */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
+.earth-glow {
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 55%, rgba(72,150,255,0.25) 75%, transparent 95%);
+  filter: blur(20px);
   pointer-events: none;
   z-index: -1;
-  opacity: 0.65;
-  background-image:
-    radial-gradient(circle, #48d9ff 1px, transparent 2px),
-    radial-gradient(circle, #4385ff 1.5px, transparent 3px),
-    radial-gradient(circle, #a4f4ff 1px, transparent 2px);
-  background-size: 130px 130px, 190px 190px, 260px 260px;
-  background-position: 0 0, 60px 80px, 120px 30px;
-  animation: particleDrift 18s linear infinite;
 }
 
-@keyframes particleDrift {
-  from {
-    background-position: 0 0, 60px 80px, 120px 30px;
-  }
-  to {
-    background-position: 0 -260px, 60px -300px, 120px -220px;
-  }
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; padding: 60px 22px 80px; text-align: center; }
+  .hero p { margin-left: auto; margin-right: auto; }
+  .hero-actions { justify-content: center; }
+  .earth-wrap { width: 280px; height: 280px; margin: 0 auto; }
+}
+
+/* SECTIONS */
+.section {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 120px 22px;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+.section-header h2 {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  margin-bottom: 16px;
+}
+.section-header h2 .gold { color: var(--accent); }
+.section-header p {
+  font-size: 19px;
+  line-height: 1.42;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+  letter-spacing: 0.012em;
+}
+
+/* TOOL CARDS */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.tool-card {
+  background: var(--surface-2);
+  border-radius: 24px;
+  padding: 40px 36px;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+.tool-card:hover {
+  transform: translateY(-4px);
+  background: #1c1c1e;
+}
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 24px;
+  color: var(--accent);
+}
+.tool-icon svg { width: 100%; height: 100%; }
+.tool-card h3 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.16667;
+  margin-bottom: 8px;
+}
+.tool-card > p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  letter-spacing: 0.01em;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 16px 0 8px;
+  letter-spacing: -0.01em;
+}
+input, textarea, select {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 15px;
+  transition: all 0.2s;
+  outline: none;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+  background: rgba(212,175,55,0.03);
+}
+input::placeholder, textarea::placeholder { color: #555; }
+textarea { resize: vertical; min-height: 80px; }
+select option { background: var(--surface); }
+
+.tool-card .btn-primary {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 24px;
+  font-size: 15px;
+}
+
+.result {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 16px;
+}
+.result.show { display: block; animation: fadeIn 0.4s var(--ease); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.result-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.result-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.copy-btn {
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 980px;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: rgba(212,175,55,0.1); }
+
+@media (max-width: 768px) {
+  .tool-grid { grid-template-columns: 1fr; }
+  .tool-card { padding: 32px 24px; }
+  .section { padding: 80px 22px; }
+  .section-header { margin-bottom: 50px; }
+}
+
+/* STATS */
+.stats {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 22px 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.stat {
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--surface-2);
+  border-radius: 20px;
+}
+.stat strong {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.stat span {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 640px) {
+  .stats { grid-template-columns: 1fr; }
+}
+
+/* STEPS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.step {
+  padding: 40px 32px;
+  background: var(--surface-2);
+  border-radius: 24px;
+  transition: transform 0.3s var(--ease);
+}
+.step:hover { transform: translateY(-4px); }
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.15);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.step h4 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.step p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .steps { grid-template-columns: 1fr; }
+}
+
+/* ABOUT */
+.about {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 120px 22px;
+  text-align: center;
+}
+.about h2 {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  margin-bottom: 20px;
+}
+.about h2 .gold { color: var(--accent); }
+.about p {
+  font-size: 19px;
+  line-height: 1.42;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* FOOTER */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 40px 22px;
+  margin-top: 40px;
+}
+.footer-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.footer-brand svg { width: 20px; height: 20px; }
+.footer-brand .ai { color: var(--accent); }
+.footer-links {
+  display: flex;
+  gap: 24px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.footer-links a:hover { color: var(--text); }
+.footer-copy {
+  max-width: 1024px;
+  margin: 24px auto 0;
+  padding-top: 20px;
+  border-top: 0.5px solid var(--border);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 140%);
+  padding: 14px 22px;
+  background: rgba(29,29,31,0.98);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 980px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: all 0.4s var(--ease);
+  z-index: 200;
+  pointer-events: none;
+}
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before {
-    animation: none;
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
   }
+  .reveal { opacity: 1; transform: none; }
+  .earth-texture { animation: earthRotate 60s linear infinite !important; }
+  .earth-clouds { animation: earthRotate 100s linear infinite !important; }
 }
-
 </style>
 </head>
-
 <body>
-<header>
-    <nav class="nav">
-        <a href="#home" class="logo">Dukaan<span>AI</span></a>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#tools">Tools</a>
-            <a href="#about">About</a>
-        </div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <svg viewBox="0 0 48 48" fill="none">
+        <path d="M10 19 L14 9 h20 l4 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 19 h22 v18 a2 2 0 0 1 -2 2 H15 a2 2 0 0 1 -2 -2 z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M21 39 v-9 h6 v9" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+      <span>Dukaan<span class="ai">AI</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#tools">Tools</a>
+      <a href="#how">How it works</a>
+      <a href="#about">About</a>
     </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+  </div>
 </header>
 
 <main>
-<section class="hero" id="home">
-    <div>
-        <span class="eyebrow">✦ Smart tools for local business</span>
-        <h1>Aapki Dukaan,<br><span class="gradient-text">Aapki Digital Growth.</span></h1>
-        <p>
-            Apne business ke liye WhatsApp offers, social media captions,
-            advertisements aur customer replies aasani se banayein.
-            Simple tools, smart results.
-        </p>
-        <a class="primary-btn" href="#tools">Explore Business Tools &nbsp; →</a>
+  <section class="hero" id="home">
+    <div class="hero-content reveal">
+      <span class="hero-eyebrow">Smart tools for local business</span>
+      <h1>Aapki Dukaan.<br><span class="gold">Aapki Growth.</span></h1>
+      <p>WhatsApp offers, social captions, ads aur customer replies. Char simple tools, ek professional business toolkit.</p>
+      <div class="hero-actions">
+        <a href="#tools" class="btn btn-primary">Explore Tools</a>
+        <a href="#how" class="btn btn-secondary">How it works</a>
+      </div>
     </div>
-
-    <div class="preview">
-        
-        <div class="ai-sphere-wrap">
-            <div class="ai-sphere">
-                <div class="ai-sphere-core"></div>
-            </div>
-            <p class="ai-sphere-label">DUKAANAI <span>INTELLIGENCE</span></p>
+    <div class="earth-stage reveal">
+      <div class="earth-wrap">
+        <div class="earth-glow"></div>
+        <div class="earth">
+          <div class="earth-texture"></div>
+          <div class="earth-clouds"></div>
+          <div class="earth-shade"></div>
         </div>
-
-        <div class="preview-top">
-            <h3>Business Studio</h3>
-            <span class="status">● Ready to use</span>
-        </div>
-        <div class="preview-box">
-            <small><span class="preview-icon">💬</span> WhatsApp Marketing</small>
-            <strong>Apne customers tak apne offers pahunchayein.</strong>
-        </div>
-        <div class="preview-box">
-            <small><span class="preview-icon">✍️</span> Social Media</small>
-            <strong>Apne business ke liye engaging captions banayein.</strong>
-        </div>
-        <div class="preview-box">
-            <small><span class="preview-icon">🚀</span> Business Growth</small>
-            <strong>Apne products aur services ko behtar tarike se promote karein.</strong>
-        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<div class="stats">
-    <div class="stat"><strong>04 Tools</strong><span>Business content helpers</span></div>
-    <div class="stat"><strong>Easy to Use</strong><span>Simple Hinglish interface</span></div>
-    <div class="stat"><strong>Copy Ready</strong><span>Content copy kar sakte hain</span></div>
-</div>
+  <div class="stats reveal">
+    <div class="stat"><strong>04</strong><span>Powerful tools</span></div>
+    <div class="stat"><strong>Simple</strong><span>Hinglish interface</span></div>
+    <div class="stat"><strong>Free</strong><span>No signup needed</span></div>
+  </div>
 
-<section class="section" id="tools">
-    <div class="section-heading">
-        <h2>Everything Your <span class="gradient-text">Business Needs</span></h2>
-        <p>Apna tool chuniye, details bhariye aur apne business ke liye content taiyar kijiye.</p>
+  <section class="section" id="tools">
+    <div class="section-header reveal">
+      <h2>Everything your <span class="gold">business needs.</span></h2>
+      <p>Apna tool chuniye, details bhariye, aur professional content turant taiyar kijiye.</p>
     </div>
 
     <div class="tool-grid">
-        <article class="tool-card">
-            <div class="tool-title">
-                <div class="tool-icon">💬</div>
-                <h3>WhatsApp Offer Maker</h3>
-            </div>
-            <p>Apni dukaan ke liye attractive promotional message banayein.</p>
-            <label for="shopName">Dukaan ka naam</label>
-            <input id="shopName" placeholder="Jaise: Patna Fashion">
-            <label for="offerText">Discount ya offer</label>
-            <input id="offerText" placeholder="Jaise: 20 ya Buy 1 Get 1">
-            <button class="primary-btn" onclick="makeOffer()">✦ Generate Offer</button>
-            <div class="result" id="offerResult">
-                <div class="result-label">YOUR OFFER MESSAGE</div>
-                <div class="result-text" id="offerOutput"></div>
-                <button class="copy-btn" onclick="copyResult('offerOutput',this)">Copy Message ↗</button>
-            </div>
-        </article>
+      <article class="tool-card reveal">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 10 a2 2 0 0 1 2 -2 h24 a2 2 0 0 1 2 2 v16 a2 2 0 0 1 -2 2 H14 l-8 6 z"/>
+            <line x1="14" y1="16" x2="26" y2="16"/>
+            <line x1="14" y1="22" x2="22" y2="22"/>
+          </svg>
+        </div>
+        <h3>WhatsApp Offer Maker</h3>
+        <p>Attractive promotional message banayein apne customers ke liye.</p>
+        <label for="shopName">Dukaan ka naam</label>
+        <input id="shopName" placeholder="Patna Fashion">
+        <label for="offerText">Discount ya offer</label>
+        <input id="offerText" placeholder="20 ya Buy 1 Get 1">
+        <button class="btn btn-primary" onclick="makeOffer()">Generate Offer</button>
+        <div class="result" id="offerResult">
+          <div class="result-label">Your Message</div>
+          <div class="result-text" id="offerOutput"></div>
+          <button class="copy-btn" onclick="copyResult('offerOutput',this)">Copy</button>
+        </div>
+      </article>
 
-        <article class="tool-card">
-            <div class="tool-title">
-                <div class="tool-icon">✍️</div>
-                <h3>Social Media Caption</h3>
-            </div>
-            <p>Instagram aur Facebook post ke liye caption taiyar karein.</p>
-            <label for="captionBusiness">Business ka naam</label>
-            <input id="captionBusiness" placeholder="Jaise: Sharma Sweets">
-            <label for="captionProduct">Product ya service</label>
-            <input id="captionProduct" placeholder="Jaise: Fresh Gulab Jamun">
-            <button class="primary-btn" onclick="makeCaption()">✦ Generate Caption</button>
-            <div class="result" id="captionResult">
-                <div class="result-label">YOUR SOCIAL CAPTION</div>
-                <div class="result-text" id="captionOutput"></div>
-                <button class="copy-btn" onclick="copyResult('captionOutput',this)">Copy Caption ↗</button>
-            </div>
-        </article>
+      <article class="tool-card reveal">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M28 4 L36 12 L14 34 L6 36 L8 28 z"/>
+            <line x1="24" y1="8" x2="32" y2="16"/>
+          </svg>
+        </div>
+        <h3>Social Media Caption</h3>
+        <p>Instagram aur Facebook ke liye engaging captions.</p>
+        <label for="captionBusiness">Business ka naam</label>
+        <input id="captionBusiness" placeholder="Sharma Sweets">
+        <label for="captionProduct">Product ya service</label>
+        <input id="captionProduct" placeholder="Fresh Gulab Jamun">
+        <button class="btn btn-primary" onclick="makeCaption()">Generate Caption</button>
+        <div class="result" id="captionResult">
+          <div class="result-label">Your Caption</div>
+          <div class="result-text" id="captionOutput"></div>
+          <button class="copy-btn" onclick="copyResult('captionOutput',this)">Copy</button>
+        </div>
+      </article>
 
-        <article class="tool-card">
-            <div class="tool-title">
-                <div class="tool-icon">📢</div>
-                <h3>Advertisement Maker</h3>
-            </div>
-            <p>Apne product ya service ko promote karne ke liye ad text banayein.</p>
-            <label for="adBusiness">Business ka naam</label>
-            <input id="adBusiness" placeholder="Jaise: Patna Mobile Store">
-            <label for="adProduct">Kya promote karna hai?</label>
-            <input id="adProduct" placeholder="Jaise: Smartphone par special offer">
-            <button class="primary-btn" onclick="makeAd()">✦ Generate Advertisement</button>
-            <div class="result" id="adResult">
-                <div class="result-label">YOUR ADVERTISEMENT</div>
-                <div class="result-text" id="adOutput"></div>
-                <button class="copy-btn" onclick="copyResult('adOutput',this)">Copy Advertisement ↗</button>
-            </div>
-        </article>
+      <article class="tool-card reveal">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 16 L8 24 L14 24 L24 32 L24 8 L14 16 z"/>
+            <path d="M28 14 a6 6 0 0 1 0 12"/>
+            <path d="M32 10 a10 10 0 0 1 0 20"/>
+          </svg>
+        </div>
+        <h3>Advertisement Maker</h3>
+        <p>Product ya service ko promote karne ke liye ad text.</p>
+        <label for="adBusiness">Business ka naam</label>
+        <input id="adBusiness" placeholder="Patna Mobile Store">
+        <label for="adProduct">Kya promote karna hai?</label>
+        <input id="adProduct" placeholder="Smartphone special offer">
+        <button class="btn btn-primary" onclick="makeAd()">Generate Advertisement</button>
+        <div class="result" id="adResult">
+          <div class="result-label">Your Advertisement</div>
+          <div class="result-text" id="adOutput"></div>
+          <button class="copy-btn" onclick="copyResult('adOutput',this)">Copy</button>
+        </div>
+      </article>
 
-        <article class="tool-card">
-            <div class="tool-title">
-                <div class="tool-icon">🤝</div>
-                <h3>Customer Reply Maker</h3>
-            </div>
-            <p>Customer ke sawal ya feedback ke liye polite reply banayein.</p>
-            <label for="customerType">Customer ka message</label>
-            <select id="customerType">
-                <option value="price">Price pooch rahe hain</option>
-                <option value="availability">Product available hai ya nahi</option>
-                <option value="thanks">Customer ne thank you kaha</option>
-                <option value="complaint">Customer ko complaint hai</option>
-                <option value="delivery">Delivery ke baare mein pooch rahe hain</option>
-            </select>
-            <label for="customerBusiness">Business ka naam</label>
-            <input id="customerBusiness" placeholder="Apni dukaan ka naam">
-            <button class="primary-btn" onclick="makeReply()">✦ Generate Reply</button>
-            <div class="result" id="replyResult">
-                <div class="result-label">YOUR CUSTOMER REPLY</div>
-                <div class="result-text" id="replyOutput"></div>
-                <button class="copy-btn" onclick="copyResult('replyOutput',this)">Copy Reply ↗</button>
-            </div>
-        </article>
+      <article class="tool-card reveal">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 12 a4 4 0 0 1 4 -4 h20 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 H16 l-8 6 v-6 a2 2 0 0 1 -2 -2 z"/>
+            <circle cx="16" cy="17" r="1.2" fill="currentColor"/>
+            <circle cx="22" cy="17" r="1.2" fill="currentColor"/>
+            <circle cx="28" cy="17" r="1.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>Customer Reply Maker</h3>
+        <p>Polite replies customer ke sawal aur feedback ke liye.</p>
+        <label for="customerType">Customer ka message</label>
+        <select id="customerType">
+          <option value="price">Price pooch rahe hain</option>
+          <option value="availability">Product available hai?</option>
+          <option value="thanks">Thank you kaha</option>
+          <option value="complaint">Complaint hai</option>
+          <option value="delivery">Delivery ke baare mein</option>
+        </select>
+        <label for="customerBusiness">Business ka naam</label>
+        <input id="customerBusiness" placeholder="Apni dukaan ka naam">
+        <button class="btn btn-primary" onclick="makeReply()">Generate Reply</button>
+        <div class="result" id="replyResult">
+          <div class="result-label">Your Reply</div>
+          <div class="result-text" id="replyOutput"></div>
+          <button class="copy-btn" onclick="copyResult('replyOutput',this)">Copy</button>
+        </div>
+      </article>
     </div>
-</section>
+  </section>
 
-<section class="section" id="about">
-    <div class="about-box">
-        <span class="eyebrow">ABOUT DUKAANAI</span>
-        <h2>Aapke Business Ka <span class="gradient-text">Digital Partner</span></h2>
-        <p>
-            DukaanAI local business owners ko marketing content banane mein
-            madad karne ke liye banaya gaya hai. Hamara goal hai digital tools
-            ko simple, useful aur har dukandaar ke liye aasaan banana.
-        </p>
+  <section class="section" id="how">
+    <div class="section-header reveal">
+      <h2>Three steps. <span class="gold">Zero complexity.</span></h2>
+      <p>Professional content banane ke liye sirf teen simple steps.</p>
     </div>
-</section>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h4>Choose a tool</h4>
+        <p>Apni zaroorat ke hisaab se tool select karein.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h4>Fill details</h4>
+        <p>Dukaan ka naam, product ya offer — basic details likhein.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h4>Copy & share</h4>
+        <p>Ready content ek click mein copy karein aur share karein.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="reveal">
+      <h2>Built for <span class="gold">Bharat's businesses.</span></h2>
+      <p>DukaanAI local business owners ko digital marketing mein madad karne ke liye banaya gaya hai. Simple tools, real results — har dukandaar ke liye.</p>
+    </div>
+  </section>
 </main>
 
 <footer>
-    <strong>DukaanAI</strong> — Aapki Dukaan, Aapki Digital Growth.
-    <p>Made to help local businesses grow.</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg viewBox="0 0 48 48" fill="none">
+        <path d="M10 19 L14 9 h20 l4 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 19 h22 v18 a2 2 0 0 1 -2 2 H15 a2 2 0 0 1 -2 -2 z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M21 39 v-9 h6 v9" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+      <span>Dukaan<span class="ai">AI</span></span>
+    </div>
+    <div class="footer-links">
+      <a href="#tools">Tools</a>
+      <a href="#how">How it works</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+  <div class="footer-copy">
+    © <span id="year">2025</span> DukaanAI. Made for local businesses.
+  </div>
 </footer>
 
+<div class="toast" id="toast"></div>
+
 <script>
-function valueOf(id) {
-    return document.getElementById(id).value.trim();
+const $ = id => document.getElementById(id);
+const val = id => $(id) ? $(id).value.trim() : '';
+
+let toastTimer;
+function toast(msg) {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
 }
 
-function showResult(boxId, outputId, message) {
-    document.getElementById(outputId).textContent = message;
-    document.getElementById(boxId).classList.add("show");
+function showResult(boxId, outId, text) {
+  $(outId).textContent = text;
+  $(boxId).classList.add('show');
 }
 
 function makeOffer() {
-    const shop = valueOf("shopName");
-    const offer = valueOf("offerText");
-
-    if (!shop || !offer) {
-        alert("Kripya dukaan ka naam aur offer dono likhein.");
-        return;
-    }
-
-    const finalOffer = /^\d+(\.\d+)?$/.test(offer)
-        ? offer + "% OFF"
-        : offer;
-
-    const message =
-        "🎉 " + shop + " ki taraf se khaas offer!\n\n" +
-        "✨ Offer: " + finalOffer + "\n\n" +
-        "Apni pasand ki shopping karein aur is offer ka fayda uthayein!\n" +
-        "Aaj hi visit karein. ❤️";
-
-    showResult("offerResult", "offerOutput", message);
+  const shop = val('shopName'), offer = val('offerText');
+  if (!shop || !offer) return toast('Dukaan ka naam aur offer dono likhein');
+  const final = /^\d+(\.\d+)?$/.test(offer) ? offer + '% OFF' : offer;
+  showResult('offerResult', 'offerOutput',
+    `🎉 ${shop} ki taraf se khaas offer!\n\n✨ Offer: ${final}\n\nApni pasand ki shopping karein aur is offer ka fayda uthayein!\nAaj hi visit karein. ❤️`);
+  toast('Offer ready');
 }
 
 function makeCaption() {
-    const business = valueOf("captionBusiness");
-    const product = valueOf("captionProduct");
-
-    if (!business || !product) {
-        alert("Kripya business ka naam aur product dono likhein.");
-        return;
-    }
-
-    const message =
-        "✨ " + product + " ab " + business + " par!\n\n" +
-        "Quality, style aur aapki pasand — sab ek jagah. ❤️\n" +
-        "Aaj hi visit karein aur apna favourite chunein!\n\n" +
-        "#LocalBusiness #Patna #Shopping #SupportLocal";
-
-    showResult("captionResult", "captionOutput", message);
+  const b = val('captionBusiness'), p = val('captionProduct');
+  if (!b || !p) return toast('Business aur product dono likhein');
+  showResult('captionResult', 'captionOutput',
+    `✨ ${p} ab ${b} par!\n\nQuality, style aur aapki pasand — sab ek jagah. ❤️\nAaj hi visit karein aur apna favourite chunein!\n\n#LocalBusiness #Shopping #SupportLocal`);
+  toast('Caption ready');
 }
 
 function makeAd() {
-    const business = valueOf("adBusiness");
-    const product = valueOf("adProduct");
-
-    if (!business || !product) {
-        alert("Kripya business aur product ki details bharein.");
-        return;
-    }
-
-    const message =
-        "🚀 SPECIAL HIGHLIGHT FROM " + business.toUpperCase() + "!\n\n" +
-        "Looking for " + product + "?\n\n" +
-        "Aaiye, hamare products aur services explore karein. " +
-        "Friendly service aur aapki zarooraton par focus — sab ek hi jagah!\n\n" +
-        "📍 Visit " + business + " today.";
-
-    showResult("adResult", "adOutput", message);
+  const b = val('adBusiness'), p = val('adProduct');
+  if (!b || !p) return toast('Business aur product dono likhein');
+  showResult('adResult', 'adOutput',
+    `🚀 SPECIAL HIGHLIGHT FROM ${b.toUpperCase()}!\n\nLooking for ${p}?\n\nAaiye, hamare products aur services explore karein. Friendly service aur aapki zarooraton par focus — sab ek hi jagah!\n\n📍 Visit ${b} today.`);
+  toast('Advertisement ready');
 }
 
 function makeReply() {
-    const business = valueOf("customerBusiness") || "hamare store";
-    const type = valueOf("customerType");
-    let message = "";
-
-    if (type === "price") {
-        message = "Namaste! 😊 " + business +
-            " mein interest dikhane ke liye dhanyavaad. " +
-            "Aap jis product ki price jaana chahte hain, uska naam batayein. Hum aapki madad karenge.";
-    } else if (type === "availability") {
-        message = "Namaste! 😊 Product availability confirm karne ke liye kripya product ka naam ya photo share karein. Dhanyavaad — " + business + ".";
-    } else if (type === "thanks") {
-        message = "Aapka bahut-bahut dhanyavaad! ❤️ " + business +
-            " ko aapki madad karke khushi hui. Dobara zaroor aaiyega!";
-    } else if (type === "complaint") {
-        message = "Namaste. Aapko hui pareshani ke liye humein khed hai. 🙏 " +
-            "Kripya apni problem aur order details share karein, taaki hum aapki madad kar sakein. — " + business;
-    } else if (type === "delivery") {
-        message = "Namaste! 😊 Delivery ke baare mein jaankari ke liye " +
-            "kripya apna order number ya product details share karein. Hum aapki madad karenge. — " + business;
-    }
-
-    showResult("replyResult", "replyOutput", message);
+  const b = val('customerBusiness') || 'hamare store';
+  const t = val('customerType');
+  const msgs = {
+    price: `Namaste! 😊 ${b} mein interest dikhane ke liye dhanyavaad. Aap jis product ki price jaana chahte hain, uska naam batayein. Hum aapki madad karenge.`,
+    availability: `Namaste! 😊 Product availability confirm karne ke liye kripya product ka naam ya photo share karein. Dhanyavaad — ${b}.`,
+    thanks: `Aapka bahut-bahut dhanyavaad! ❤️ ${b} ko aapki madad karke khushi hui. Dobara zaroor aaiyega!`,
+    complaint: `Namaste. Aapko hui pareshani ke liye humein khed hai. 🙏 Kripya apni problem aur order details share karein, taaki hum aapki madad kar sakein. — ${b}`,
+    delivery: `Namaste! 😊 Delivery ke baare mein jaankari ke liye kripya apna order number ya product details share karein. Hum aapki madad karenge. — ${b}`
+  };
+  showResult('replyResult', 'replyOutput', msgs[t] || '');
+  toast('Reply ready');
 }
 
-async function copyResult(outputId, button) {
-    const text = document.getElementById(outputId).textContent;
-
-    try {
-        await navigator.clipboard.writeText(text);
-        button.textContent = "✓ Copied!";
-    } catch (error) {
-        const area = document.createElement("textarea");
-        area.value = text;
-        document.body.appendChild(area);
-        area.select();
-        const copied = document.execCommand("copy");
-        area.remove();
-        button.textContent = copied ? "✓ Copied!" : "Please select and copy";
-    }
-
-    setTimeout(() => {
-        button.textContent = button.dataset.original || "Copy";
-    }, 1800);
+async function copyResult(id, btn) {
+  const text = $(id).textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = '✓ Copied';
+    toast('Copied to clipboard');
+  } catch {
+    toast('Copy failed');
+  }
+  setTimeout(() => btn.textContent = 'Copy', 1800);
 }
 
-document.querySelectorAll(".copy-btn").forEach(button => {
-    button.dataset.original = button.textContent;
+// Nav toggle
+const navToggle = $('navToggle'), navLinks = $('navLinks');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 60) + 'ms';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach(el => io.observe(el));
+} else {
+  reveals.forEach(el => el.classList.add('in'));
+}
+
+$('year').textContent = new Date().getFullYear();
+
+// Enter key support
+[['shopName','offerText'], ['captionBusiness','captionProduct'], ['adBusiness','adProduct'], ['customerBusiness']].forEach(group => {
+  group.forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (group[0].includes('shop')) makeOffer();
+      else if (group[0].includes('caption')) makeCaption();
+      else if (group[0].includes('ad')) makeAd();
+      else makeReply();
+    });
+  });
 });
 </script>
 </body>
